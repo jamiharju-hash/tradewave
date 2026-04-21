@@ -1,0 +1,20 @@
+{
+  "name": "tradewave",
+  "version": "1.0.0",
+  "description": "TradeWave — Non-custodial Telegram crypto trading bot",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "@coinbase/coinbase-sdk": "^0.10.0",
+    "better-sqlite3": "^9.4.3",
+    "decimal.js": "^10.4.3",
+    "dotenv": "^16.4.5",
+    "grammy": "^1.21.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
