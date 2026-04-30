@@ -1,22 +1,20 @@
 'use strict';
 require('dotenv').config();
 
+const { getRequiredEnvGroups } = require('./config');
 const { initCoinbase } = require('./wallet');
 const { createBot } = require('./bot');
 
-const REQUIRED_ENV = [
-  'NODE_ENV',
-  'TELEGRAM_BOT_TOKEN',
-  'CDP_API_KEY_NAME',
-  'CDP_PRIVATE_KEY',
-  'WALLET_ENCRYPTION_KEY',
-  'NETWORK_ID',
-];
-
 function checkEnv() {
-  const missing = REQUIRED_ENV.filter((k) => !process.env[k]);
-  if (missing.length) {
-    console.error(`❌ Missing environment variables:\n  ${missing.join('\n  ')}`);
+  const missingGroups = getRequiredEnvGroups().filter(
+    (names) => !names.some((name) => process.env[name])
+  );
+
+  if (missingGroups.length) {
+    console.error('❌ Missing environment variables:');
+    for (const group of missingGroups) {
+      console.error(`  one of: ${group.join(', ')}`);
+    }
     console.error('\nCopy .env.example → .env and fill in all values.');
     process.exit(1);
   }
