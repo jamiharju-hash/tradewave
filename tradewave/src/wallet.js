@@ -2,16 +2,16 @@
 const { Coinbase, Wallet } = require('@coinbase/coinbase-sdk');
 const { encrypt, decrypt } = require('./encryption');
 const { walletOps } = require('./db');
+const { getCoinbaseApiKeyName, getCoinbasePrivateKey, getNetworkId } = require('./config');
 
-const NETWORK_ID = process.env.NETWORK_ID;
+const NETWORK_ID = getNetworkId();
 const SUPPORTED_ASSETS = Object.freeze(['eth', 'usdc']);
 const walletLocks = new Map();
 
 function initCoinbase() {
-  const privateKey = (process.env.CDP_PRIVATE_KEY || '').replace(/\\n/g, '\n');
   Coinbase.configure({
-    apiKeyName: process.env.CDP_API_KEY_NAME,
-    privateKey,
+    apiKeyName: getCoinbaseApiKeyName(),
+    privateKey: getCoinbasePrivateKey(),
   });
   console.log(`✅ Coinbase CDP configured (network: ${NETWORK_ID})`);
 }
